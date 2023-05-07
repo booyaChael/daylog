@@ -1,6 +1,6 @@
 import classes from "./Goal.module.css";
 
-const Goal = (props) => {
+const ProjectGoal = (props) => {
   return (
     <section className={classes.goal}>
       <h2>하루하루는 최선을 다해, 인생 전체는 되는대로</h2>
@@ -12,4 +12,4 @@ const Goal = (props) => {
   );
 };
 
-export default Goal;
+export default ProjectGoal;

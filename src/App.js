@@ -1,11 +1,11 @@
 import Header from "./components/Layout/Header";
-import Goal from "./components/Projects/Goal";
+import Projects from "./components/Projects/Projects";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Goal />
+      <Projects />
     </div>
   );
 }
