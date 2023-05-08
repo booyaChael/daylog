@@ -7,6 +7,8 @@ const ProjectGoal = (props) => {
       <ul>
         <li>유데미 강의 마무리하기</li>
         <li>프로젝트 준비하기</li>
+        <li>프로젝트 준비하기</li>
+        <li>프로젝트 준비하기</li>
       </ul>
     </section>
   );
