@@ -1,11 +1,11 @@
 import Header from "./components/Layout/Header";
 import Projects from "./components/Projects/Projects";
-import Todaylog from "./components/Todaylog/Todaylog";
+import Today from "./components/Today/Today";
 
 function App() {
   return (
     <div className="App">
-      <Todaylog />
+      <Today />
       <Header />
       <Projects />
     </div>
