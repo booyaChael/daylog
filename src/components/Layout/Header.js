@@ -1,12 +1,12 @@
 import classes from "./Header.module.css";
 import HeaderTodayBtn from "./HeaderTodayBtn";
 
-function Header() {
+function Header(props) {
   return (
     <>
       <header className={classes.header}>
         <h1>하루의 기록</h1>
-        <HeaderTodayBtn />
+        <HeaderTodayBtn onShow={props.onShow} />
       </header>
     </>
   );

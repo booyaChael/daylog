@@ -4,10 +4,12 @@ import classes from "./Today.module.css";
 
 const dummyTodayData = [
   {
+    id: 1,
     name: "Udemy 강의 듣기",
     spend: 1,
   },
   {
+    id: 2,
     name: "매일 운동하기",
     spend: 1.5,
   },
@@ -15,19 +17,21 @@ const dummyTodayData = [
 
 const Today = (props) => {
   const todayLogs = dummyTodayData.map((project) => (
-    <Todaylog name={project.name} spend={project.spend} />
+    <Todaylog key={project.id} name={project.name} spend={project.spend} />
   ));
 
   const totalTime = "2.5시간";
   return (
-    <Modal>
+    <Modal onClose={props.onClose}>
       {todayLogs}
       <div className={classes.total}>
         <span>오늘의 투자</span>
         <span>{totalTime}</span>
       </div>
       <div className={classes.actions}>
-        <button className={classes["button--alt"]}>취소</button>
+        <button className={classes["button--alt"]} onClick={props.onClose}>
+          취소
+        </button>
         <button className={classes.button}>기록</button>
       </div>
     </Modal>
