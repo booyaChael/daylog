@@ -2,6 +2,7 @@ import Header from "./components/Layout/Header";
 import Projects from "./components/Projects/Projects";
 import Today from "./components/Today/Today";
 import { useState } from "react";
+import TodayProvider from "./store/TodayProvider";
 
 function App() {
   const [showToday, setShowToday] = useState(false);
@@ -14,11 +15,13 @@ function App() {
     setShowToday(false);
   };
   return (
-    <div className="App">
-      {showToday && <Today onClose={hideTodayHandler} />}
-      <Header onShow={showTodayHandler} />
-      <Projects />
-    </div>
+    <TodayProvider>
+      <div className="App">
+        {showToday && <Today onClose={hideTodayHandler} />}
+        <Header onShow={showTodayHandler} />
+        <Projects />
+      </div>
+    </TodayProvider>
   );
 }
 
