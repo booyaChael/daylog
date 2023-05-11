@@ -25,6 +25,7 @@ const dummyProjects = [
 const MyProjects = (props) => {
   const projectLists = dummyProjects.map((project) => (
     <MyProject
+      id={project.id}
       key={project.id}
       name={project.name}
       explanation={project.explanation}

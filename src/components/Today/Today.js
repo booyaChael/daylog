@@ -1,26 +1,16 @@
 import Modal from "../UI/Modal";
 import Todaylog from "./Todaylog";
 import classes from "./Today.module.css";
-
-const dummyTodayData = [
-  {
-    id: 1,
-    name: "Udemy 강의 듣기",
-    spend: 1,
-  },
-  {
-    id: 2,
-    name: "매일 운동하기",
-    spend: 1.5,
-  },
-];
+import { useContext } from "react";
+import TodayContext from "../../store/today-context";
 
 const Today = (props) => {
-  const todayLogs = dummyTodayData.map((project) => (
-    <Todaylog key={project.id} name={project.name} spend={project.spend} />
+  const todayCtx = useContext(TodayContext);
+  const { projects, totalTime } = todayCtx;
+  const todayLogs = projects.map((project) => (
+    <Todaylog key={project.id} name={project.name} spend={project.time} />
   ));
 
-  const totalTime = "2.5시간";
   return (
     <Modal onClose={props.onClose}>
       {todayLogs}

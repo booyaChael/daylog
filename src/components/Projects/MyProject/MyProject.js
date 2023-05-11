@@ -1,7 +1,17 @@
 import classes from "./MyProject.module.css";
 import MyProjectForm from "./MyProjectForm";
+import { useContext } from "react";
+import TodayContext from "../../../store/today-context";
 
 const MyProject = (props) => {
+  const todayCtx = useContext(TodayContext);
+  const addTimeToTodayHandler = (time) => {
+    todayCtx.addProject({
+      id: props.id,
+      name: props.name,
+      time: time,
+    });
+  };
   const wantToSpend = `${props.wantToSpend}시간`;
   return (
     <li className={classes.project}>
@@ -11,7 +21,7 @@ const MyProject = (props) => {
         <div className={classes.wantToSpend}>{wantToSpend}</div>
       </div>
       <div>
-        <MyProjectForm />
+        <MyProjectForm onAddTimeToToday={addTimeToTodayHandler} />
       </div>
     </li>
   );

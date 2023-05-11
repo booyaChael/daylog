@@ -2,8 +2,13 @@ import Input from "../../UI/Input";
 import classes from "./MyProjectForm.module.css";
 
 const MyProjectForm = (props) => {
+  const submitHandler = (event) => {
+    event.preventDefault();
+    console.log("submit");
+    props.onAddTimeToToday(2);
+  };
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={submitHandler}>
       <Input
         label="시간"
         input={{
