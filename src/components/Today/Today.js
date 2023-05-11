@@ -7,6 +7,9 @@ import TodayContext from "../../store/today-context";
 const Today = (props) => {
   const todayCtx = useContext(TodayContext);
   const { projects, totalTime } = todayCtx;
+
+  const totalHour = parseInt(totalTime / 60);
+  const totalMinute = parseInt(totalTime % 60);
   const todayLogs = projects.map((project) => (
     <Todaylog key={project.id} name={project.name} spend={project.time} />
   ));
@@ -16,7 +19,9 @@ const Today = (props) => {
       {todayLogs}
       <div className={classes.total}>
         <span>오늘의 투자</span>
-        <span>{totalTime}</span>
+        <span>
+          {totalHour}시간 {totalMinute}분
+        </span>
       </div>
       <div className={classes.actions}>
         <button className={classes["button--alt"]} onClick={props.onClose}>

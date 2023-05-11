@@ -1,8 +1,23 @@
 .form {
-  text-align: right;
+  display: flex;
+  flex-direction: column;
 }
 
-.form button {
+.inputfield {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.buttonfield {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0rem 1rem;
+}
+
+.buttonfield button {
   font: inherit;
   cursor: pointer;
   background-color: #222831;

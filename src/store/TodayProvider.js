@@ -11,6 +11,7 @@ const todayReducer = (state, action) => {
     const updatedProjects = state.projects.concat(action.project);
     const updatedTime = state.totalTime + action.project.time;
     console.log(updatedProjects);
+    console.log(updatedTime);
     return {
       projects: updatedProjects,
       totalTime: updatedTime,
