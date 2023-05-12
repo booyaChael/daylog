@@ -2,13 +2,15 @@ import classes from "./Todaylog.module.css";
 
 const Todaylog = (props) => {
   const minutes = props.time;
-  const spend = `${parseInt(minutes / 60)}시간 ${minutes % 60}분`;
+  const hour = parseInt(minutes / 60);
+  const minute = minutes % 60;
+  const time = hour === 0 ? `${minute}분` : `${hour}시간 ${minute}분`;
   return (
     <li className={classes.project}>
       <div>
         <h2>{props.name}</h2>
         <div>
-          <span className={classes.time}>{spend}</span>
+          <span className={classes.time}>{time}</span>
         </div>
       </div>
       <div className={classes.actions}>
