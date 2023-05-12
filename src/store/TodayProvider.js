@@ -8,10 +8,26 @@ const defaultTodayState = {
 
 const todayReducer = (state, action) => {
   if (action.type === "ADD") {
-    const updatedProjects = state.projects.concat(action.project);
+    const existingProjectIndex = state.projects.findIndex(
+      (project) => project.id === action.project.id
+    );
+    console.log(existingProjectIndex);
+    const existingProject = state.projects[existingProjectIndex];
+    console.log(existingProject);
+    let updatedProjects;
+    if (existingProjectIndex >= 0) {
+      console.log(action.project);
+      const updatedProject = {
+        ...existingProject,
+        time: existingProject.time + action.project.time,
+      };
+      updatedProjects = state.projects;
+      updatedProjects[existingProjectIndex] = updatedProject;
+    } else {
+      updatedProjects = state.projects.concat(action.project);
+    }
     const updatedTime = state.totalTime + action.project.time;
     console.log(updatedProjects);
-    console.log(updatedTime);
     return {
       projects: updatedProjects,
       totalTime: updatedTime,

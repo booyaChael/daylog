@@ -11,8 +11,9 @@ const Today = (props) => {
   const totalHour = parseInt(totalTime / 60);
   const totalMinute = parseInt(totalTime % 60);
   const todayLogs = projects.map((project) => (
-    <Todaylog key={project.id} name={project.name} spend={project.time} />
+    <Todaylog key={project.id} name={project.name} time={project.time} />
   ));
+  console.log(todayLogs);
 
   return (
     <Modal onClose={props.onClose}>
