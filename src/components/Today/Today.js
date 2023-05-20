@@ -6,14 +6,39 @@ import TodayContext from "../../store/today-context";
 
 const Today = (props) => {
   const todayCtx = useContext(TodayContext);
-  const { projects, totalTime } = todayCtx;
+  const { projects, totalTime, addProject, removeProject } = todayCtx;
 
   const totalHour = parseInt(totalTime / 60);
   const totalMinute = parseInt(totalTime % 60);
-  const todayLogs = projects.map((project) => (
-    <Todaylog key={project.id} name={project.name} time={project.time} />
-  ));
-  console.log(todayLogs);
+
+  const addProjectHandler = (project) => {
+    addProject({
+      id: project.id,
+      name: project.name,
+      time: 1,
+    });
+  };
+
+  const removeProjectHandler = (project) => {
+    removeProject({
+      id: project.id,
+      time: 1,
+    });
+  };
+
+  const todayLogs = (
+    <ul className={classes.projects}>
+      {projects.map((project) => (
+        <Todaylog
+          key={project.id}
+          name={project.name}
+          time={project.time}
+          onAdd={addProjectHandler.bind(null, project)}
+          onRemove={removeProjectHandler.bind(null, project)}
+        />
+      ))}
+    </ul>
+  );
 
   return (
     <Modal onClose={props.onClose}>
