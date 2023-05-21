@@ -1,15 +1,21 @@
 import Modal from "../UI/Modal";
 import Todaylog from "./Todaylog";
 import classes from "./Today.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import TodayContext from "../../store/today-context";
+import Diary from "./Diary.js";
 
 const Today = (props) => {
   const todayCtx = useContext(TodayContext);
   const { projects, totalTime, addProject, removeProject } = todayCtx;
+  const [isDiary, setIsDiary] = useState(false);
+
+  const diaryHandler = () => setIsDiary(true);
 
   const totalHour = parseInt(totalTime / 60);
   const totalMinute = parseInt(totalTime % 60);
+
+  const hasProject = projects.length > 0;
 
   const addProjectHandler = (project) => {
     addProject({
@@ -49,11 +55,19 @@ const Today = (props) => {
           {totalHour}시간 {totalMinute}분
         </span>
       </div>
+      {isDiary && <Diary />}
       <div className={classes.actions}>
         <button className={classes["button--alt"]} onClick={props.onClose}>
           취소
         </button>
-        <button className={classes.button}>기록</button>
+        {hasProject && !isDiary && (
+          <button className={classes.button} onClick={diaryHandler}>
+            기록
+          </button>
+        )}
+        {hasProject && isDiary && (
+          <button className={classes.button}>저장</button>
+        )}
       </div>
     </Modal>
   );
