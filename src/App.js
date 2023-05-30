@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Layout/Header";
+import Projects from "./components/Projects/Projects";
+import Today from "./components/Today/Today";
+import { useState } from "react";
+import TodayProvider from "./store/TodayProvider";
 
 function App() {
+  const [showToday, setShowToday] = useState(false);
+
+  const showTodayHandler = () => {
+    setShowToday(true);
+  };
+
+  const hideTodayHandler = () => {
+    setShowToday(false);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodayProvider>
+      <div className="App">
+        {showToday && <Today onClose={hideTodayHandler} />}
+        <Header onShow={showTodayHandler} />
+        <Projects />
+      </div>
+    </TodayProvider>
   );
 }
 
