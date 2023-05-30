@@ -1,6 +1,7 @@
 .form {
   margin: 1rem 0;
-  height: 18rem;
+  height: 15rem;
+
   overflow: auto;
 }
 
@@ -44,7 +45,7 @@
 
 .actions button {
   font: inherit;
-  color: #5a1a01;
+  color: #393e46;
   cursor: pointer;
   background-color: transparent;
   border: none;
@@ -54,6 +55,13 @@
 
 .actions button:hover,
 .actions button:active {
+  background-color: white;
+  border: 1px solid #393e46;
+}
+
+.actions .submit {
+  border: 1px solid #393e46;
+  background-color: #393e46;
   background-color: #ffe6dc;
 }
 
@@ -65,7 +73,8 @@
 
 .actions .submit:hover,
 .actions .submit:active {
-  background-color: #7a2706;
+  background-color: #222831;
+
 }
 
 .invalid label {

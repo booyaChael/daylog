@@ -53,6 +53,10 @@ const todayReducer = (state, action) => {
     const updatedTotalTime = state.totalTime - action.project.time;
     return { projects: updatedProjects, totalTime: updatedTotalTime };
   }
+  if (action.type === "CLEAR") {
+    return defaultTodayState;
+  }
+  return defaultTodayState;
 };
 
 const TodayProvider = (props) => {
@@ -60,6 +64,7 @@ const TodayProvider = (props) => {
     todayReducer,
     defaultTodayState
   );
+
   const addProjectHandler = (project) => {
     dispatchTodayAction({ type: "ADD", project });
   };
@@ -67,12 +72,16 @@ const TodayProvider = (props) => {
   const removeProjectHandler = (project) => {
     dispatchTodayAction({ type: "REMOVE", project });
   };
+  const clearProjectHandler = () => {
+    dispatchTodayAction({ type: "CLEAR" });
+  };
 
   const todayContext = {
     projects: todayState.projects,
     totalTime: todayState.totalTime,
     addProject: addProjectHandler,
     removeProject: removeProjectHandler,
+    clearProject: clearProjectHandler,
   };
 
   return (
