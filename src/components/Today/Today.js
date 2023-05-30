@@ -21,6 +21,37 @@ const Today = (props) => {
 
   const hasProject = projects.length > 0;
 
+  const addProjectHandler = (project) => {
+    addProject({
+      id: project.id,
+      name: project.name,
+      time: 1,
+    });
+  };
+
+  const removeProjectHandler = (project) => {
+    removeProject({
+      id: project.id,
+      time: 1,
+    });
+  };
+
+  const todayLogs = (
+    <ul className={classes.projects}>
+      {projects.map((project) => (
+        <Todaylog
+          key={project.id}
+          name={project.name}
+          time={project.time}
+          onAdd={addProjectHandler.bind(null, project)}
+          onRemove={removeProjectHandler.bind(null, project)}
+        />
+      ))}
+    </ul>
+  );
+
+  const hasProject = projects.length > 0;
+
   const saveHandler = (diaryData) => {
     setIsSubmitting(true);
     fetch("https://daylog-d368c-default-rtdb.firebaseio.com/logs.json", {
@@ -107,6 +138,7 @@ const Today = (props) => {
       {!isSubmitting && !didSubmit && todayModalContent}
       {isSubmitting && !didSubmit && isSubmittingModalContent}
       {!isSubmitting && didSubmit && didSubmitModalContent}
+
     </Modal>
   );
 };

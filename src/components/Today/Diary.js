@@ -80,9 +80,6 @@ const Diary = (props) => {
             저장
           </button>
         </div>
-      </div>
-    </form>
-  );
-};
+
 
 export default Diary;
