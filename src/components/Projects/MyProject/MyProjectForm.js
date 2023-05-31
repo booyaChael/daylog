@@ -15,6 +15,7 @@ const MyProjectForm = (props) => {
     const calculatedMinute = enteredHourNumber * 60 + enteredMinuteNumber;
 
     props.onAddTimeToToday(calculatedMinute);
+    console.log(`calculatedMinute:${calculatedMinute}`);
   };
   return (
     <form className={classes.form} onSubmit={submitHandler}>

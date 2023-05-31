@@ -8,6 +8,8 @@ const clearTodayState = {
   totalTime: 0,
 };
 const todayReducer = (state, action) => {
+  console.log(state);
+  console.log(action);
   if (action.type === "ADD") {
     const existingProjectIndex = state.projects.findIndex(
       (project) => project.id === action.project.id
@@ -83,7 +85,6 @@ const TodayProvider = (props) => {
   const removeProjectHandler = (project) => {
     dispatchTodayAction({ type: "REMOVE", project });
   };
-
   const clearProjectHandler = () => {
     dispatchTodayAction({ type: "CLEAR" });
   };

@@ -1,29 +1,40 @@
 import Card from "../UI/Card";
 import MyProject from "./MyProject/MyProject";
+import { useEffect, useState } from "react";
+import classes from "./MyProjects.module.css";
 
-const dummyProjects = [
-  {
-    id: 1,
-    name: "Udemy 강의 듣기",
-    explanation: "리액트에 대한 전문성 향상",
-    wantToSpend: 2,
-  },
-  {
-    id: 2,
-    name: "매일 운동하기",
-    explanation: "리액트에 대한 전문성 향상",
-    wantToSpend: 2,
-  },
-  {
-    id: 3,
-    name: "프로젝트 준비",
-    explanation: "리액트에 대한 전문성 향상",
-    wantToSpend: 2,
-  },
-];
 
 const MyProjects = (props) => {
-  const projectLists = dummyProjects.map((project) => (
+  const [projectsData, setProjectsData] = useState([]);
+  const [httpError, setHttpError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    console.log(1);
+    const fetchProjects = async () => {
+      const response = await fetch(
+        "https://daylog-d368c-default-rtdb.firebaseio.com/projects.json"
+      );
+      console.log(2);
+      const responseData = await response.json();
+      console.log(3);
+      const loadedProjects = [];
+      for (const key in responseData) {
+        loadedProjects.push({
+          id: key,
+          name: responseData[key].name,
+          explanation: responseData[key].explanation,
+          wantToSpend: responseData[key].wantToSpend,
+        });
+      }
+      setProjectsData(loadedProjects);
+      setIsLoading(false);
+    };
+    fetchProjects().catch((error) => {
+      setIsLoading(false);
+      setHttpError(error.message);
+    });
+  }, []);
+  const projectLists = projectsData.map((project) => (
     <MyProject
       id={project.id}
       key={project.id}
@@ -32,8 +43,24 @@ const MyProjects = (props) => {
       wantToSpend={project.wantToSpend}
     />
   ));
+  if (isLoading) {
+    console.log(6);
+    return (
+      <section className={classes.projectsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+  if (httpError) {
+    return (
+      <section className={classes.Error}>
+        <p>Error</p>
+      </section>
+    );
+  }
+  console.log("not isLoading");
   return (
-    <section>
+    <section className={classes.projects}>
       <Card>{projectLists}</Card>
     </section>
   );

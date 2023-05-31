@@ -34,7 +34,6 @@ const Today = (props) => {
     setDidSubmit(true);
     clearProject();
   };
-
   const addProjectHandler = (project) => {
     addProject({
       id: project.id,
@@ -63,6 +62,9 @@ const Today = (props) => {
       ))}
     </ul>
   );
+
+  const hasProject = projects.length > 0;
+
 
   const isSubmittingModalContent = <p>기록중입니다...</p>;
 
