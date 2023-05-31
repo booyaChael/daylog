@@ -3,7 +3,7 @@ import Todaylog from "./Todaylog";
 import classes from "./Today.module.css";
 import { useContext, useState } from "react";
 import TodayContext from "../../store/today-context";
-import Diary from "./Diary.js";
+import Diary from "./Diary";
 
 const Today = (props) => {
   const todayCtx = useContext(TodayContext);
@@ -21,6 +21,19 @@ const Today = (props) => {
 
   const hasProject = projects.length > 0;
 
+  const saveHandler = (diaryData) => {
+    setIsSubmitting(true);
+    fetch("https://daylog-d368c-default-rtdb.firebaseio.com/logs.json", {
+      method: "POST",
+      body: JSON.stringify({
+        diary: diaryData,
+        projects: projects,
+      }),
+    });
+    setIsSubmitting(false);
+    setDidSubmit(true);
+    clearProject();
+  };
   const addProjectHandler = (project) => {
     addProject({
       id: project.id,
@@ -52,48 +65,6 @@ const Today = (props) => {
 
   const hasProject = projects.length > 0;
 
-  const saveHandler = (diaryData) => {
-    setIsSubmitting(true);
-    fetch("https://daylog-d368c-default-rtdb.firebaseio.com/logs.json", {
-      method: "POST",
-      body: JSON.stringify({
-        diary: diaryData,
-        projects: projects,
-      }),
-    });
-    setIsSubmitting(false);
-    setDidSubmit(true);
-    clearProject();
-  };
-
-  const addProjectHandler = (project) => {
-    addProject({
-      id: project.id,
-      name: project.name,
-      time: 1,
-    });
-  };
-
-  const removeProjectHandler = (project) => {
-    removeProject({
-      id: project.id,
-      time: 1,
-    });
-  };
-
-  const todayLogs = (
-    <ul className={classes.projects}>
-      {projects.map((project) => (
-        <Todaylog
-          key={project.id}
-          name={project.name}
-          time={project.time}
-          onAdd={addProjectHandler.bind(null, project)}
-          onRemove={removeProjectHandler.bind(null, project)}
-        />
-      ))}
-    </ul>
-  );
 
   const isSubmittingModalContent = <p>기록중입니다...</p>;
 
@@ -138,7 +109,6 @@ const Today = (props) => {
       {!isSubmitting && !didSubmit && todayModalContent}
       {isSubmitting && !didSubmit && isSubmittingModalContent}
       {!isSubmitting && didSubmit && didSubmitModalContent}
-
     </Modal>
   );
 };

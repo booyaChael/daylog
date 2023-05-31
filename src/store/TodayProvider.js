@@ -1,11 +1,12 @@
 import TodayContext from "./today-context";
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 
-const defaultTodayState = {
+let defaultTodayState = JSON.parse(localStorage.getItem("todayData"));
+
+const clearTodayState = {
   projects: [],
   totalTime: 0,
 };
-
 const todayReducer = (state, action) => {
   console.log(state);
   console.log(action);
@@ -54,7 +55,8 @@ const todayReducer = (state, action) => {
     return { projects: updatedProjects, totalTime: updatedTotalTime };
   }
   if (action.type === "CLEAR") {
-    return defaultTodayState;
+    console.log("clear");
+    return clearTodayState;
   }
   return defaultTodayState;
 };
@@ -64,6 +66,17 @@ const TodayProvider = (props) => {
     todayReducer,
     defaultTodayState
   );
+
+  useEffect(() => {
+    console.log(todayState);
+    console.log("set localstorage");
+    localStorage.setItem("todayData", JSON.stringify(todayState));
+
+    const todayDataFromLocalStorage = JSON.parse(
+      localStorage.getItem("todayData")
+    );
+    console.log(todayDataFromLocalStorage);
+  }, [todayState]);
 
   const addProjectHandler = (project) => {
     dispatchTodayAction({ type: "ADD", project });
