@@ -10,7 +10,27 @@
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 5%;
+  padding: 0 3%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 10;
+}
+.button {
+  cursor: pointer;
+  font: inherit;
+  border: none;
+  background-color: #393e46;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon img {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
 }
