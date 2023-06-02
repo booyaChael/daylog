@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SideBarItem from "./SideBarItem";
 
 const menus = [
+  { name: "홈", path: "/" },
   { name: "나의 기록", path: "/my_logs" },
   { name: "통계", path: "/statics" },
   { name: "프로젝트 관리", path: "/edit" },

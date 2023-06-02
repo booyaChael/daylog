@@ -1,0 +1,12 @@
+.log {
+  width: 14%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

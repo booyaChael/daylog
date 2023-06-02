@@ -4,7 +4,7 @@ import classes from "./HeaderTodayBtn.module.css";
 
 const HeaderTodayBtn = (props) => {
   return (
-    <button className={classes.button} onClick={props.onShow}>
+    <button className={classes.button} onClick={props.onShowToday}>
       <span className={classes.icon}>
         <img src={todayIcon} alt="today" />
       </span>

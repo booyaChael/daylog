@@ -1,0 +1,14 @@
+.logs {
+  width: 100%;
+  margin-top: 8rem;
+  display: flex;
+}
+
+.logs ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

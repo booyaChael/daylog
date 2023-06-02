@@ -15,7 +15,7 @@ function Header(props) {
 
           <h1>하루의 기록</h1>
         </div>
-        <HeaderTodayBtn onShowToday={props.onShow} />
+        <HeaderTodayBtn onShowToday={props.onShowToday} />
       </header>
     </>
   );
