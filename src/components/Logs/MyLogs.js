@@ -1,95 +1,44 @@
+import { db } from "../../utill/firebase";
+import { ref, get } from "firebase/database";
 import Card from "../UI/Card";
 import Log from "./Log";
 import classes from "./MyLogs.module.css";
+import { useEffect, useState } from "react";
+import WeekCalendar from "./WeekCalendar";
+
+const logsRef = ref(db, "logs");
 
 const MyLogsPage = () => {
-  const dummyLogData = [
-    {
-      diary: {
-        date: "2023-06-05",
-        score: 10,
-        text: "강의를 열심히 듣자",
-      },
-      projects: [
-        { id: "p1", name: "Udemy", time: 33 },
-        { id: "p2", name: "운동", time: 50 },
-      ],
-    },
-    {
-      diary: {
-        date: "2023-06-06",
-        score: 20,
-        text: "강의를 많이 들었다",
-      },
-      projects: [
-        { id: "p1", name: "Udemy", time: 33 },
-        { id: "p2", name: "운동", time: 50 },
-      ],
-    },
-    {
-      diary: {
-        date: "2023-06-07",
-        score: 20,
-        text: "강의를 많이 들었다",
-      },
-      projects: [
-        { id: "p1", name: "Udemy", time: 33 },
-        { id: "p2", name: "운동", time: 50 },
-      ],
-    },
-    {
-      diary: {
-        date: "2023-06-08",
-        score: 20,
-        text: "강의를 많이 들었다",
-      },
-      projects: [
-        { id: "p1", name: "Udemy", time: 33 },
-        { id: "p2", name: "운동", time: 50 },
-      ],
-    },
-    {
-      diary: {
-        date: "2023-06-09",
-        score: 20,
-        text: "강의를 많이 들었다",
-      },
-      projects: [
-        { id: "p1", name: "Udemy", time: 33 },
-        { id: "p2", name: "운동", time: 50 },
-      ],
-    },
-    {
-      diary: {
-        date: "2023-06-10",
-        score: 20,
-        text: "강의를 많이 들었다",
-      },
-      projects: [
-        { id: "p1", name: "Udemy", time: 33 },
-        { id: "p2", name: "운동", time: 50 },
-      ],
-    },
-    {
-      diary: {
-        date: "2023-06-11",
-        score: 20,
-        text: "강의를 많이 들었다",
-      },
-      projects: [
-        { id: "p1", name: "Udemy", time: 33 },
-        { id: "p2", name: "운동", time: 50 },
-      ],
-    },
-  ];
+  const [logsData, setLogsData] = useState([]);
+  useEffect(() => {
+    const fetchLogs = async () => {
+      const snapshot = await get(logsRef);
+      const logs = await snapshot.val();
 
-  const logs = dummyLogData.map((log, key) => (
-    <Log diary={log.diary} projects={log.projects} key={key} />
+      const loadedLogs = [];
+      for (const date in logs) {
+        loadedLogs.push({
+          id: date,
+          date: date,
+          text: logs[date].text,
+          projects: logs[date].projects,
+        });
+      }
+      setLogsData(loadedLogs);
+    };
+    fetchLogs().catch((error) => {
+      return error;
+    });
+  }, []);
+
+  const logs = logsData.map((log) => (
+    <Log key={log.id} date={log.date} text={log.text} projects={log.projects} />
   ));
 
   return (
     <section className={classes.logs}>
       <Card>
+        <WeekCalendar />
         <ul>{logs}</ul>
       </Card>
     </section>

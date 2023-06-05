@@ -22,7 +22,6 @@ function App() {
 
   const toggleShowSideBarHandler = () => {
     setShowSideBar(!showSideBar);
-    console.log(showSideBar);
   };
 
   return (

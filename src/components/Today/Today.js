@@ -4,6 +4,8 @@ import classes from "./Today.module.css";
 import { useContext, useState } from "react";
 import TodayContext from "../../store/today-context";
 import Diary from "./Diary";
+import { db } from "../../utill/firebase";
+import { ref, set, get, update } from "firebase/database";
 
 const Today = (props) => {
   const todayCtx = useContext(TodayContext);
@@ -21,15 +23,35 @@ const Today = (props) => {
 
   const hasProject = projects.length > 0;
 
-  const saveHandler = (diaryData) => {
+  const saveHandler = async (logDate, logText) => {
     setIsSubmitting(true);
-    fetch("https://daylog-d368c-default-rtdb.firebaseio.com/logs.json", {
-      method: "POST",
-      body: JSON.stringify({
-        diary: diaryData,
-        projects: projects,
-      }),
-    });
+    const saveData = {
+      logDate,
+      logText,
+      projects,
+    };
+
+    const checkData = async (dateKey) => {
+      const snapshot = await get(ref(db, "logs/" + dateKey), dateKey);
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        return null;
+      }
+    };
+
+    //각 사용자는 고유한 사용자 이름을 갖게 되므로 별도의 키를 만들 필요가 없기 때문에 push 메서드 대신 set 메서드를 사용하는 것이 좋습니다
+    const addLog = async (newData) => {
+      const previousData = await checkData(newData.logDate);
+      if (previousData) {
+        const previousLogRef = ref(db, "logs/" + newData.logDate);
+        update(previousLogRef, newData);
+      } else {
+        const logsRef = ref(db, "logs/" + logDate);
+        set(logsRef, newData);
+      }
+    };
+    addLog(saveData);
     setIsSubmitting(false);
     setDidSubmit(true);
     clearProject();

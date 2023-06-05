@@ -53,7 +53,6 @@ const todayReducer = (state, action) => {
     return { projects: updatedProjects, totalTime: updatedTotalTime };
   }
   if (action.type === "CLEAR") {
-    console.log("clear");
     return clearTodayState;
   }
   return defaultTodayState;
@@ -66,8 +65,6 @@ const TodayProvider = (props) => {
   );
 
   useEffect(() => {
-    console.log(todayState);
-    console.log("set localstorage");
     localStorage.setItem("todayData", JSON.stringify(todayState));
 
     const todayDataFromLocalStorage = JSON.parse(

@@ -2,35 +2,34 @@ import Card from "../UI/Card";
 import MyProject from "./MyProject/MyProject";
 import { useEffect, useState } from "react";
 import classes from "./MyProjects.module.css";
+import { db } from "../../utill/firebase";
+import { ref, get } from "firebase/database";
 
+const projectsRef = ref(db, "projects");
 const MyProjects = (props) => {
   const [projectsData, setProjectsData] = useState([]);
   const [httpError, setHttpError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    console.log(isLoading);
     const fetchProjects = async () => {
-      const response = await fetch(
-        "https://daylog-d368c-default-rtdb.firebaseio.com/projects.json"
-      );
-      const responseData = await response.json();
-
+      const snapshot = await get(projectsRef);
+      const projects = await snapshot.val();
       const loadedProjects = [];
-      for (const key in responseData) {
+      for (const key in projects) {
         loadedProjects.push({
           id: key,
-          name: responseData[key].name,
-          explanation: responseData[key].explanation,
-          wantToSpend: responseData[key].wantToSpend,
+          name: projects[key].name,
+          explanation: projects[key].explanation,
+          wantToSpend: projects[key].wantToSpend,
         });
-        setProjectsData(loadedProjects);
-        setIsLoading(false);
       }
+      setProjectsData(loadedProjects);
+      setIsLoading(false);
     };
     fetchProjects().catch((error) => {
       setHttpError(error.message);
     });
-  }, [isLoading]);
+  }, []);
   const projectLists = projectsData.map((project) => (
     <MyProject
       id={project.id}

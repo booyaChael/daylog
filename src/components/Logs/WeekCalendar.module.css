@@ -1,0 +1,42 @@
+.displayFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thisMonth {
+  font-weight: 500;
+  font-size: 40px;
+}
+
+.icon img {
+  height: 20px;
+  width: 20px;
+}
+.daysHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.days {
+  font-size: 30px;
+}
+
+.day {
+  width: 14%;
+}
+
+.weekHandleBtns {
+  display: flex;
+  position: fixed;
+  z-index: 3;
+  left: 10px;
+  right: 10px;
+  justify-content: space-between;
+}
+.weekHandleBtn img {
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  border-radius: 20px;
+}
