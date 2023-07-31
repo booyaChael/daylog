@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   format,
   subMonths,
@@ -15,7 +15,7 @@ import classes from "./WeekCalendar.module.css";
 import backIcon from "../../assets/back.png";
 import nextIcon from "../../assets/next.png";
 
-const Calendar = ({ showDetailsHandle }) => {
+const WeekCalendar = (props) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -30,14 +30,12 @@ const Calendar = ({ showDetailsHandle }) => {
   };
 
   const changeWeekHandle = (btnType) => {
-    console.log("current week", currentWeek);
     if (btnType === "prev") {
       console.log(subWeeks(currentMonth, 1));
       setCurrentMonth(subWeeks(currentMonth, 1));
       setCurrentWeek(getWeek(subWeeks(currentMonth, 1)));
     }
     if (btnType === "next") {
-      console.log(addWeeks(currentMonth, 1));
       setCurrentMonth(addWeeks(currentMonth, 1));
       setCurrentWeek(getWeek(addWeeks(currentMonth, 1)));
     }
@@ -45,7 +43,6 @@ const Calendar = ({ showDetailsHandle }) => {
 
   const onDateClickHandle = (day, dayStr) => {
     setSelectedDate(day);
-    showDetailsHandle(dayStr);
   };
 
   const renderHeader = () => {
@@ -72,10 +69,13 @@ const Calendar = ({ showDetailsHandle }) => {
       </div>
     );
   };
+
+  let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+
   const renderDays = () => {
     const dateFormat = "EEE";
     const days = [];
-    let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+
     for (let i = 0; i < 7; i++) {
       days.push(
         <div key={i} className={`${classes.day} ${classes.displayFlex}`}>
@@ -99,7 +99,7 @@ const Calendar = ({ showDetailsHandle }) => {
           <img src={backIcon} alt="back" />
         </div>
         <div
-          className={`${classes.weekHandleBtn} `}
+          className={`${classes.weekHandleBtn}`}
           onClick={() => changeWeekHandle("next")}
         >
           <img src={nextIcon} alt="next" />
@@ -157,4 +157,4 @@ const Calendar = ({ showDetailsHandle }) => {
   );
 };
 
-export default Calendar;
+export default WeekCalendar;

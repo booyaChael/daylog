@@ -43,11 +43,41 @@ const Today = (props) => {
     //각 사용자는 고유한 사용자 이름을 갖게 되므로 별도의 키를 만들 필요가 없기 때문에 push 메서드 대신 set 메서드를 사용하는 것이 좋습니다
     const addLog = async (newData) => {
       const previousData = await checkData(newData.logDate);
+
       if (previousData) {
+        let updatedProjects = previousData.projects;
+        const newProjects = newData.projects;
+        for (let i = 0; i < newProjects.length; i++) {
+          const existingPreviousProjectIndex = updatedProjects.findIndex(
+            (prevProject) => prevProject.id === newProjects[i].id
+          );
+          //기존 프로젝트 목록에 추가하려는 프로젝트 id가 존재한다면
+          if (existingPreviousProjectIndex !== -1) {
+            const existingProject =
+              updatedProjects[existingPreviousProjectIndex];
+            //해당 프로젝트를 가져와 추가하려는 프로젝트 정보와 내용을 합쳐준다
+            const updatedProject = {
+              ...existingProject,
+              time: existingProject.time + newProjects[i].time,
+            };
+            //updatedProjects에 있는 내용을 변경해준다
+            updatedProjects[existingPreviousProjectIndex] = updatedProject;
+            console.log(updatedProjects);
+          } else {
+            updatedProjects.push(newProjects[i]);
+            console.log(updatedProjects);
+          }
+        }
+        console.log(newData);
+        const updatedData = {
+          ...newData,
+          projects: updatedProjects,
+        };
         const previousLogRef = ref(db, "logs/" + newData.logDate);
-        update(previousLogRef, newData);
+        update(previousLogRef, updatedData);
       } else {
-        const logsRef = ref(db, "logs/" + logDate);
+        console.log("no previous Data");
+        const logsRef = ref(db, "logs/" + newData.logDate);
         set(logsRef, newData);
       }
     };

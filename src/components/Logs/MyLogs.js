@@ -6,25 +6,22 @@ import classes from "./MyLogs.module.css";
 import { useEffect, useState } from "react";
 import WeekCalendar from "./WeekCalendar";
 
-const logsRef = ref(db, "logs");
-
 const MyLogsPage = () => {
   const [logsData, setLogsData] = useState([]);
+  const [weekStartDate, setWeekStartDate] = useState();
+
   useEffect(() => {
     const fetchLogs = async () => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0"); // Adding 1 to month as it is zero-based
+      const day = String(today.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`;
+      console.log(formattedDate);
+      const logsRef = ref(db, "logs/" + formattedDate);
       const snapshot = await get(logsRef);
       const logs = await snapshot.val();
-
-      const loadedLogs = [];
-      for (const date in logs) {
-        loadedLogs.push({
-          id: date,
-          date: date,
-          text: logs[date].text,
-          projects: logs[date].projects,
-        });
-      }
-      setLogsData(loadedLogs);
+      console.log(logs);
     };
     fetchLogs().catch((error) => {
       return error;
@@ -38,7 +35,7 @@ const MyLogsPage = () => {
   return (
     <section className={classes.logs}>
       <Card>
-        <WeekCalendar />
+        <WeekCalendar onWeekStartDate={setWeekStartDate} />
         <ul>{logs}</ul>
       </Card>
     </section>
